@@ -10,10 +10,8 @@ phases:
       - docker pull $terraformImage
       - PROJ_NAME="$PROJETCT_NAME"
       - REPOSITORY_URI="$ECR_ADDRESS"
-      - mkdir terraform
-      - cp -rv $(pwd)/* terraform/
-      - mkdir terraform/.aws && aws s3 cp s3://hackaton-fiap-1dvp-12345/instance-need/.aws/credentials terraform/.aws/ && aws s3 cp s3://hackaton-fiap-1dvp-12345/instance-need/.aws/config terraform/.aws/
-      - mkdir terraform/.ssh && aws s3 cp s3://hackaton-fiap-1dvp-12345/instance-need/.ssh/fiap-lab.pem terraform/.ssh/ 
+      - mkdir .aws && aws s3 cp s3://hackaton-fiap-1dvp-12345/instance-need/.aws/credentials .aws/ && aws s3 cp s3://hackaton-fiap-1dvp-12345/instance-need/.aws/config .aws/
+      - mkdir .ssh && aws s3 cp s3://hackaton-fiap-1dvp-12345/instance-need/.ssh/fiap-lab.pem .ssh/ 
   pre_build:
     commands:
       - login=$(aws ecr get-login --region=us-east-1)
@@ -21,7 +19,6 @@ phases:
       - echo $login | bash      
   build:
     commands:
-      - cd terraform
       - dockerterraform="docker run --rm -w /app  -v $PWD:/app -v $PWD/.aws:/root/.aws -v $PWD/.ssh:/root/.ssh -e PROJ_NAME=$PROJ_NAME $terraformImage"
       - $dockerterraform init 
       - $dockerterraform workspace select $STAGE || $dockerterraform workspace new $STAGE
