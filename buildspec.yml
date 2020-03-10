@@ -6,7 +6,7 @@ phases:
     commands: 
       - apt-get update -y
       - apt-get install -y jq
-      - terraformImage="hashicorp/terraform:0.12.23"
+      - terraformImage="hashicorp/terraform:full"
       - docker pull $terraformImage
       - PROJ_NAME="$PROJETCT_NAME"
       - REPOSITORY_URI="$ECR_ADDRESS"
