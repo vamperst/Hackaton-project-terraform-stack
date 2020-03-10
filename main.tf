@@ -11,7 +11,7 @@ data "template_file" "script" {
 }
 
 resource "null_resource" "local" {
-  triggers {
+  triggers = {
     template = "${data.template_file.script.rendered}"
   }
 
