@@ -76,7 +76,9 @@ resource "aws_instance" "web" {
   iam_instance_profile   = "${aws_iam_instance_profile.ecr_readOnly_profile.name}"
 
   provisioner "remote-exec" {
-    inline = "${data.template_file.script.rendered}"
+    inline = [
+      "${data.template_file.script.rendered}"
+    ]
   }
 
   connection {
