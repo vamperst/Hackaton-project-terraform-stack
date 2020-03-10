@@ -94,8 +94,8 @@ resource "aws_instance" "web" {
       "ls -lha $(pwd)",
       "echo uname -m",
       "uname -m",
-      "chmod +x $(pwd)/script.sh",
-      "sh $(pwd)/script.sh"
+      "sudo chmod +x $(pwd)/script.sh",
+      "sudo bash $(pwd)/script.sh"
     ]
   }
 
