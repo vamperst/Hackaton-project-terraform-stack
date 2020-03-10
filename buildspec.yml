@@ -12,7 +12,7 @@ phases:
       - REPOSITORY_URI="$ECR_ADDRESS"
       - mkdir terraform
       - mkdir terraform/.aws && aws s3 cp s3://hackaton-fiap-1dvp-12345/instance-need/.aws/credentials terraform/.aws/ && aws s3 cp s3://hackaton-fiap-1dvp-12345/instance-need/.aws/config terraform/.aws/
-      - mkdir terraform/.ssh && aws s3 cp s3://hackaton-fiap-1dvp-12345/instance-need/.ssh/fiap-18cld.pem terraform/.ssh/ 
+      - mkdir terraform/.ssh && aws s3 cp s3://hackaton-fiap-1dvp-12345/instance-need/.ssh/fiap-lab.pem terraform/.ssh/ 
   pre_build:
     commands:
       - login=$(aws ecr get-login --region=us-east-1)
