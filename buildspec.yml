@@ -23,7 +23,7 @@ phases:
     commands:
       - cd terraform
       - dockerterraform="docker run --rm -w /app  -v $PWD:/app -v $PWD/.aws:/root/.aws -v $PWD/.ssh:/root/.ssh -e PROJ_NAME=$PROJ_NAME $terraformImage"
-      - 
+      - cp -rv $(pwd)/* terraform
       - $dockerterraform init 
       - $dockerterraform workspace select $STAGE || $dockerterraform workspace new $STAGE
       - $dockerterraform destroy -var ECR_REGISTRY="${REPOSITORY_URI}" -auto-approve
