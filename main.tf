@@ -9,6 +9,17 @@ data "template_file" "script" {
     ECR_REGISTRY = "${var.ECR_REGISTRY}"
   }
 }
+
+resource "null_resource" "local" {
+  triggers {
+    template = "${data.template_file.script.rendered}"
+  }
+
+  provisioner "local-exec" {
+    command = "echo \"${data.template_file.script.rendered}\" > script.sh"
+  }
+}
+
 variable "project" {
   default = "fiap-lab"
 }
@@ -75,9 +86,16 @@ resource "aws_instance" "web" {
   key_name               = "${var.KEY_NAME}"
   iam_instance_profile   = "${aws_iam_instance_profile.ecr_readOnly_profile.name}"
 
+  provisioner "file" {
+    source      = "${path.module}/script.sh"
+    destination = "/tmp/script.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
-      "${data.template_file.script.rendered}"
+      "ls /tmp/",
+      "chmod +x /tmp/script.sh",
+      "sudo /tmp/script.sh"
     ]
   }
 
