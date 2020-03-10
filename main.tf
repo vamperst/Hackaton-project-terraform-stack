@@ -92,6 +92,8 @@ resource "aws_instance" "web" {
       "ls -lha /tmp/",
       "echo ls -lha $(pwd)",
       "ls -lha $(pwd)",
+      "echo file $(pwd)/script.sh",
+      "file $(pwd)/script.sh",
       "sudo chmod +x $(pwd)/script.sh",
       "sudo sh $(pwd)/script.sh"
     ]
