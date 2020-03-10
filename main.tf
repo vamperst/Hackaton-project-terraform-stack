@@ -10,15 +10,6 @@ data "template_file" "script" {
   }
 }
 
-resource "null_resource" "local" {
-  triggers = {
-    template = "${data.template_file.script.rendered}"
-  }
-
-  provisioner "local-exec" {
-    command = "echo \"${data.template_file.script.rendered}\" > script.sh"
-  }
-}
 
 variable "project" {
   default = "fiap-lab"
@@ -79,7 +70,7 @@ resource "aws_instance" "web" {
   instance_type = "t2.micro"
   ami           = "${lookup(var.aws_amis, var.aws_region)}"
 
-  count = 1
+  count = 3
 
   subnet_id              = "${random_shuffle.random_subnet.result[0]}"
   vpc_security_group_ids = ["${aws_security_group.allow-ssh.id}"]
@@ -87,17 +78,20 @@ resource "aws_instance" "web" {
   iam_instance_profile   = "${aws_iam_instance_profile.ecr_readOnly_profile.name}"
 
   provisioner "file" {
-    source      = "${path.module}/script.sh"
+    content      = "${data.template_file.script.rendered}"
+    destination = "/tmp/script.sh"
+  }
+  provisioner "file" {
+    content      = "${data.template_file.script.rendered}"
     destination = "$(pwd)/script.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "echo ls /tmp/",
-      "ls /tmp/",
-      "echo ls $(pwd)",
-      "ls $(pwd)",
-      "cat $(pwd)/script.sh",
+      "echo ls -lha /tmp/",
+      "ls -lha /tmp/",
+      "echo ls -lha $(pwd)",
+      "ls -lha $(pwd)",
       "sudo chmod +x $(pwd)/script.sh",
       "sudo sh $(pwd)/script.sh"
     ]
