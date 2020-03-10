@@ -20,7 +20,6 @@ phases:
       - echo $login | bash      
   build:
     commands:
-      - cp imagedefinitions.json terraform/
       - cd terraform
       - dockerterraform="docker run --rm -w /app  -v $PWD:/app -v $PWD/.aws:/root/.aws -v $PWD/.ssh:/root/.ssh -e PROJ_NAME=$PROJ_NAME $terraformImage"
       - $dockerterraform init 
