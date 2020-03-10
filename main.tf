@@ -79,21 +79,11 @@ resource "aws_instance" "web" {
 
   provisioner "file" {
     content      = "${data.template_file.script.rendered}"
-    destination = "/tmp/script.sh"
-  }
-  provisioner "file" {
-    content      = "${data.template_file.script.rendered}"
     destination = "$(pwd)/script.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "echo ls -lha /tmp/",
-      "ls -lha /tmp/",
-      "echo ls -lha $(pwd)",
-      "ls -lha $(pwd)",
-      "echo uname -m",
-      "uname -m",
       "sudo chmod +x $(pwd)/script.sh",
       "sudo bash $(pwd)/script.sh"
     ]
