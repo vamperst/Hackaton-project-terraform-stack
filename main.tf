@@ -75,16 +75,8 @@ resource "aws_instance" "web" {
   key_name               = "${var.KEY_NAME}"
   iam_instance_profile   = "${aws_iam_instance_profile.ecr_readOnly_profile.name}"
 
-  provisioner "file" {
-    content      = "${data.template_file.script.rendered}"
-    destination = "/tmp/script.sh"
-  }
-
   provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/script.sh",
-      "sudo /tmp/script.sh",
-    ]
+    inline = "${data.template_file.script.rendered}"
   }
 
   connection {
