@@ -12,7 +12,7 @@ data "template_file" "script" {
 
 
 variable "project" {
-  default = "${format("fiap-lab-${terraform.workspace}")}"
+  default = "fiap-lab"
 }
 
 data "aws_vpc" "vpc" {
