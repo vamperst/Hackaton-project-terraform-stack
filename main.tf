@@ -12,12 +12,12 @@ data "template_file" "script" {
 
 
 variable "project" {
-  default = "fiap-lab"
+  default = "${format("fiap-lab-${terraform.workspace}")}"
 }
 
 data "aws_vpc" "vpc" {
   tags = {
-    Name = "${var.project}"
+    Name = "${format("${var.project}-${terraform.workspace}")}"
   }
 }
 
@@ -74,7 +74,7 @@ resource "aws_instance" "web" {
 
   subnet_id              = "${random_shuffle.random_subnet.result[0]}"
   vpc_security_group_ids = ["${aws_security_group.allow-ssh.id}"]
-  key_name               = "${var.KEY_NAME}"
+  key_name               = "${format("${var.KEY_NAME}-${terraform.workspace}")}"
   iam_instance_profile   = "${aws_iam_instance_profile.ecr_readOnly_profile.name}"
 
   provisioner "file" {
