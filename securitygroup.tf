@@ -1,6 +1,6 @@
 resource "aws_security_group" "allow-ssh" {
   vpc_id      = "${data.aws_vpc.vpc.id}"
-  name        = "allow-ssh-stack"
+  name        = "allow-ssh-stack-${terraform.workspace}"
 
   egress {
     from_port   = 0
@@ -23,6 +23,6 @@ resource "aws_security_group" "allow-ssh" {
   }
 
   tags = {
-    Name = "allow-ssh-stack"
+    Name = "allow-ssh-stack-${terraform.workspace}"
   }
 }
