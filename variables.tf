@@ -23,3 +23,6 @@ variable "INSTANCE_USERNAME" {
 }
 variable "ECR_REGISTRY" {
 }
+variable "ENVIROMENT_V1" {
+  default = ${terraform.workspace}
+}
