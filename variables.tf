@@ -23,5 +23,5 @@ variable "INSTANCE_USERNAME" {
 }
 variable "ECR_REGISTRY" {
 }
-variable "REP" {
+variable "ECR_REP" {
 }
