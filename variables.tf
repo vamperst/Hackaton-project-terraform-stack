@@ -23,5 +23,3 @@ variable "INSTANCE_USERNAME" {
 }
 variable "ECR_REGISTRY" {
 }
-variable "STAGE" {
-}
