@@ -7,7 +7,6 @@ data "template_file" "script" {
   template = "${file("${path.module}/script.sh.tpl")}"
   vars = {
     ECR_REGISTRY = "${var.ECR_REGISTRY}"
-    REP = "${ECR_REP}"
   }
 }
 
