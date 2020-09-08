@@ -10,7 +10,6 @@ phases:
       - docker pull $terraformImage
       - PROJ_NAME="$PROJETCT_NAME"
       - REPOSITORY_URI="$ECR_ADDRESS"
-      - 
       - mkdir .aws && aws s3 cp s3://hackathon-fiap-dvp2-335224/instance-need/.aws/credentials .aws/ && aws s3 cp s3://hackathon-fiap-dvp2-335224/instance-need/.aws/config .aws/
       - mkdir .ssh && aws s3 cp s3://hackathon-fiap-dvp2-335224/instance-need/.ssh/fiap-lab.pem .ssh/ 
   pre_build:
@@ -26,7 +25,6 @@ phases:
       - $dockerterraform destroy -var ECR_REGISTRY="${REPOSITORY_URI}" -auto-approve
       - $dockerterraform plan -var ECR_REGISTRY="${REPOSITORY_URI}" -out plan.out
       - $dockerterraform apply -var ECR_REGISTRY="${REPOSITORY_URI}" -auto-approve
-      - $dockerterraform apply -var ECR_REP="${ECR_REP}" -auto-approve
       - elb=$($dockerterraform output elb_public)
       - echo $elb >> elb.txt
   post_build:
