@@ -14,7 +14,7 @@ echo $login | bash
 
 rep=$(STAGE)
 
-TAG=$(aws ecr describe-images --region=us-east-1 --output json --repository-name $rep --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output=text)
+TAG=$(aws ecr describe-images --region=us-east-1 --output json --repository-name hackathon-app-$rep --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output=text)
 dockerImage=${ECR_REGISTRY}:$TAG
 docker pull $dockerImage
 
