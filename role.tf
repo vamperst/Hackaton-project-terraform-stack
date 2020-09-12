@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ecr_readOnly_role" {
-  name = "ecr_readOnly_role"
+  name = "ecr_readOnly_role-${var.STAGE}"
 
   assume_role_policy = <<EOF
 {
@@ -23,7 +23,7 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "ecr_readOnly_profile" {
-  name = "ecr_readOnly_profile"
+  name = "ecr_readOnly_profile-${var.STAGE}"
   role = "${aws_iam_role.ecr_readOnly_role.name}"
 }
 
